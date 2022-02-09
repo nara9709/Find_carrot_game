@@ -1,7 +1,8 @@
 'use strict';
 
 const settingBox = document.querySelector('.setting__box');
-const popupBox = document.querySelector('.popup__box');
+const popupBoxLose = document.querySelector('.popup__box__lose');
+const popupBoxWin = document.querySelector('.popup__box__win');
 const carrotBox = document.querySelector('.carrot__box');
 const timer = document.querySelector('.timer');
 const startBtn = document.querySelector('.btn__start');
@@ -28,7 +29,7 @@ function onStart() {
 // song stop
 
 startBtn.addEventListener('click', () => {
-  popupBox.classList.add('hidden');
+  popupBoxLose.classList.add('hidden');
   startBtn.classList.add('hidden');
   onStart();
 });
@@ -98,7 +99,7 @@ function createLocaBug(element) {
 function gameFail() {
   clearInterval(timeCountdown);
   startBtn.classList.toggle('hidden');
-  popupBox.classList.toggle('hidden');
+  popupBoxLose.classList.toggle('hidden');
 
   while (carrotBox.firstChild) {
     carrotBox.firstChild.remove();
@@ -109,7 +110,7 @@ function gameFail() {
 resetBtn.addEventListener('click', () => {
   // let carrots = document.querySelectorAll('carrot__img');
   // let bugs = document.querySelectorAll('bug__img');
-
-  popupBox.classList.toggle('hidden');
+  startBtn.classList.toggle('hidden');
+  popupBoxLose.classList.toggle('hidden');
   onStart();
 });

@@ -84,9 +84,24 @@ body {
   outline: var(--outline);
 }
 
-.popup__box {
+.popup__box__lose {
   width: 500px;
-  height: 180px;
+  height: 190px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: auto;
+  border-radius: 20px;
+  position: absolute;
+  left: 34%;
+  top: 500px;
+}
+
+.popup__box__win {
+  width: 500px;
+  height: 190px;
   display: flex;
   justify-content: center;
   flex-direction: column;
