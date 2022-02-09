@@ -2,6 +2,7 @@
 
 const settingBox = document.querySelector('.setting__box');
 const popupBox = document.querySelector('.popup__box');
+const carrotBox = document.querySelector('.carrot__box');
 const timer = document.querySelector('.timer');
 const startBtn = document.querySelector('.btn__start');
 const stopBtn = document.querySelector('.btn__stop');
@@ -10,16 +11,10 @@ const resetBtn = document.querySelector('.btn__reset');
 // start game with start button
 function onStart() {
   // change start button to stop button
-  startBtn.classList.add('hidden');
-
-  //   const createStopBtn = document.createElement('button');
-  //   createStopBtn.setAttribute('class', 'btn btn__stop');
-  //   createStopBtn.innerHTML = `<i class="fas fa-stop-circle"></i>`;
-
-  settingBox.insertBefore(createStopBtn, timer);
 
   // Imgs locate randomly
-  //   createLoca();
+  createElement();
+
   // timer start
 
   startTimer();
@@ -33,6 +28,8 @@ function onStart() {
 // song stop
 
 startBtn.addEventListener('click', () => {
+  popupBox.classList.add('hidden');
+  startBtn.classList.add('hidden');
   onStart();
 });
 
@@ -48,22 +45,71 @@ function startTimer() {
       gameFail();
     }
   }, 1000);
+}
 
-  //   timeCountdown = setInterval(() => {
-  //     let startSec = 10;
-  //     timer.innerHTML = `00: ${startSec}`;
-  //     startSec--;
-  //   }, 1000);
+// Create element
+function createElement() {
+  for (let i = 1; i <= 8; i++) {
+    const createCarrot = document.createElement('img');
+    createCarrot.setAttribute('src', './img/carrot.png');
+    createCarrot.setAttribute('class', 'carrot__img');
+    createCarrot.setAttribute('data', `${[i]}`);
+    createLocaCarrot(createCarrot);
+  }
+
+  for (let i = 1; i <= 8; i++) {
+    const createBug = document.createElement('img');
+    createBug.setAttribute('src', './img/bug.png');
+    createBug.setAttribute('class', 'bug__img');
+    createBug.setAttribute('data', `${[i]}`);
+    createLocaBug(createBug);
+  }
+}
+
+// Make random coordinates with min, max
+function randint(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function createLocaCarrot(element) {
+  element.style.position = 'absolute';
+  element.style.left = randint(17, 1513) + 'px';
+  element.style.top = randint(641, 800) + 'px';
+
+  carrotBox.appendChild(element);
+
+  element.addEventListener('click', () => {
+    element.classList.add('hidden');
+  });
+}
+
+function createLocaBug(element) {
+  element.style.position = 'absolute';
+  element.style.left = randint(17, 1513) + 'px';
+  element.style.top = randint(641, 1037) + 'px';
+
+  carrotBox.appendChild(element);
+
+  element.addEventListener('click', () => {
+    gameFail();
+  });
 }
 
 function gameFail() {
   clearInterval(timeCountdown);
-
+  startBtn.classList.toggle('hidden');
   popupBox.classList.toggle('hidden');
+
+  while (carrotBox.firstChild) {
+    carrotBox.firstChild.remove();
+  }
 }
 
 // Click reset button
 resetBtn.addEventListener('click', () => {
+  // let carrots = document.querySelectorAll('carrot__img');
+  // let bugs = document.querySelectorAll('bug__img');
+
   popupBox.classList.toggle('hidden');
   onStart();
 });
