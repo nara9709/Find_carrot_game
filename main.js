@@ -10,28 +10,28 @@ const startBtn = document.querySelector('.btn__start');
 const stopBtn = document.querySelector('.btn__stop');
 const resetBtn = document.querySelector('.btn__reset');
 const carrotCount = document.querySelector('.count');
+const audioBgm = new Audio('./sound/bg.mp3');
+const audioAlert = new Audio('./sound/alert.wav');
+const audioWin = new Audio('./sound/game_win.mp3');
+const audioCarrot = new Audio('./sound/carrot_pull.mp3');
+const audioBug = new Audio('./sound/bug_pull.mp3');
 
-// start game with start button
+// Start Game
 function onStart() {
-  // change start button to stop button
-  // Imgs locate randomly
-  // Count carrot number
+  // song play
+  audioBgm.currentTime = 0;
+  audioBgm.play();
+
   carrotCount.innerHTML = '8';
+
+  // Set carrots and bugs on random loncation
   createElement();
 
-  // count carrot number
-  // timer start
-
+  //Timer start
   startTimer();
-
-  // song play
 }
 
-// 2. stop game with stop button
-
-// timer stop
-// song stop
-
+// Start button
 startBtn.addEventListener('click', () => {
   popupBoxLose.classList.add('hidden');
   popupBoxWin.classList.add('hidden');
@@ -40,9 +40,10 @@ startBtn.addEventListener('click', () => {
   onStart();
 });
 
+// Timer
 let timeCountdown;
 function startTimer() {
-  let sec = 10;
+  let sec = 5;
   timeCountdown = setInterval(() => {
     timer.innerHTML = `00 : ${sec}`;
     sec--;
@@ -54,12 +55,6 @@ function startTimer() {
       clearInterval(timeCountdown);
 
       gameReply();
-
-      // startBtn.addEventListener('click', (pauseTime) => {
-      //   startBtn.classList.add('hidden');
-      //   sec = pauseTime;
-      //   timeCountdown;
-      // });
     });
 
     if (sec === -1) {
@@ -95,14 +90,13 @@ function randint(min, max) {
 
 function createLocaCarrot(element) {
   element.style.position = 'absolute';
-  element.style.left = randint(17, 1513) + 'px';
+  element.style.left = randint(17, 1981) + 'px';
   element.style.top = randint(641, 800) + 'px';
 
   carrotBox.appendChild(element);
-  // let carrotNumber = 8;
-  // carrotCount.innerHTML = `${Number(carrotNumber)}`;
 
   element.addEventListener('click', (e) => {
+    audioCarrot.play();
     element.classList.add('hidden');
     let counter = parseInt(carrotCount.innerHTML);
     let result = counter - 1;
@@ -122,11 +116,16 @@ function createLocaBug(element) {
   carrotBox.appendChild(element);
 
   element.addEventListener('click', () => {
+    audioBug.play();
     gameFail();
   });
 }
 
+// When game is fail
 function gameFail() {
+  audioBug.play();
+  audioBgm.pause();
+
   clearInterval(timeCountdown);
   startBtn.classList.toggle('hidden');
   popupBoxLose.classList.toggle('hidden');
@@ -136,7 +135,11 @@ function gameFail() {
   }
 }
 
+// When game is win
 function gameWin() {
+  audioBgm.pause();
+  audioWin.play();
+
   clearInterval(timeCountdown);
   startBtn.classList.toggle('hidden');
   popupBoxWin.classList.toggle('hidden');
@@ -146,7 +149,11 @@ function gameWin() {
   }
 }
 
+// When click stop button
 function gameReply() {
+  audioBgm.pause();
+  audioAlert.play();
+
   popupBoxReply.classList.remove('hidden');
   startBtn.classList.remove('hidden');
 
@@ -155,9 +162,8 @@ function gameReply() {
   }
 }
 
-// Click reset button
+// Reset button
 document.body.addEventListener('click', (e) => {
-  // console.log()
   if (e.target.className == 'fas fa-undo') {
     startBtn.classList.toggle('hidden');
     popupBoxLose.classList.add('hidden');
@@ -166,13 +172,3 @@ document.body.addEventListener('click', (e) => {
     onStart();
   }
 });
-
-function countCarrot() {
-  carrotBox.addEventListener('click', (e) => {
-    // if (
-    //   e.target.tagName == 'IMG' &&
-    //   typeof e.target.dataset.value == 'string'
-    // ) {
-    // }
-  });
-}
