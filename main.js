@@ -43,7 +43,7 @@ startBtn.addEventListener('click', () => {
 // Timer
 let timeCountdown;
 function startTimer() {
-  let sec = 5;
+  let sec = 4;
   timeCountdown = setInterval(() => {
     timer.innerHTML = `00 : ${sec}`;
     sec--;
