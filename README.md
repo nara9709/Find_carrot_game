@@ -2,6 +2,6 @@
 
 ## Game diagram
 
-![Image](./img/Fina a carrot.png)
+![Image](./img/Fina_a_carrot.png)
 
 ## Link: https://nara9709.github.io/Find_carrot_game/
