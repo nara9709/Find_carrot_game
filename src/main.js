@@ -1,4 +1,5 @@
 'use strict';
+import * as sound from './sound.js';
 
 const firstStartBox = document.querySelector('.first_start_box');
 const settingBox = document.querySelector('.setting__box');
@@ -10,11 +11,6 @@ const startBtn = document.querySelector('.btn__start');
 const firstStartBtn = document.querySelector('.btn__first_start');
 const resetBtn = document.querySelector('.btn__reset');
 const carrotCount = document.querySelector('.count');
-const audioBgm = new Audio('./sound/bg.mp3');
-const audioAlert = new Audio('./sound/alert.wav');
-const audioWin = new Audio('./sound/game_win.mp3');
-const audioCarrot = new Audio('./sound/carrot_pull.mp3');
-const audioBug = new Audio('./sound/bug_pull.mp3');
 
 const CARROT_SIZE = 100;
 const GAME_DURATION = 5;
@@ -25,9 +21,7 @@ let started = false;
 function onStart() {
   started = true;
   // song play
-  audioBgm.currentTime = 0;
-  audioBgm.play();
-
+  sound.playBgm();
   carrotCount.innerHTML = '8';
 
   // Set carrots and bugs on random loncation
@@ -116,7 +110,7 @@ function createLocaCarrot(element) {
   elementPosition(element);
 
   element.addEventListener('click', (e) => {
-    audioCarrot.play();
+    sound.playCarrot();
     element.classList.add('hidden');
     let counter = parseInt(carrotCount.innerHTML);
     let result = counter - 1;
@@ -132,15 +126,15 @@ function createLocaBug(element) {
   elementPosition(element);
 
   element.addEventListener('click', () => {
-    audioBug.play();
+    sound.playBug();
     gameFail();
   });
 }
 
 // When game is fail
 function gameFail() {
-  audioBug.play();
-  audioBgm.pause();
+  sound.playBug();
+  sound.stopBgm();
 
   clearInterval(timeCountdown);
   startBtn.classList.toggle('hidden');
@@ -153,8 +147,8 @@ function gameFail() {
 
 // When game is win
 function gameWin() {
-  audioBgm.pause();
-  audioWin.play();
+  sound.stopBgm();
+  sound.playWin();
 
   clearInterval(timeCountdown);
   startBtn.classList.toggle('hidden');
@@ -167,8 +161,8 @@ function gameWin() {
 
 // When click stop button
 function gameReply() {
-  audioBgm.pause();
-  audioAlert.play();
+  sound.stopBgm;
+  sound.playAlert;
 
   showPopUp('stop');
 
