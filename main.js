@@ -1,13 +1,13 @@
 'use strict';
 
+const firstStartBox = document.querySelector('.first_start_box');
 const settingBox = document.querySelector('.setting__box');
-const popupBoxLose = document.querySelector('.popup__box__lose');
-const popupBoxWin = document.querySelector('.popup__box__win');
-const popupBoxReply = document.querySelector('.popup__box__reply');
+const popupBox = document.querySelector('.pop-up');
+const popUpMessage = document.querySelector('.pop-up__message');
 const carrotBox = document.querySelector('.carrot__box');
 const timer = document.querySelector('.timer');
 const startBtn = document.querySelector('.btn__start');
-const stopBtn = document.querySelector('.btn__stop');
+const firstStartBtn = document.querySelector('.btn__first_start');
 const resetBtn = document.querySelector('.btn__reset');
 const carrotCount = document.querySelector('.count');
 const audioBgm = new Audio('./sound/bg.mp3');
@@ -16,8 +16,14 @@ const audioWin = new Audio('./sound/game_win.mp3');
 const audioCarrot = new Audio('./sound/carrot_pull.mp3');
 const audioBug = new Audio('./sound/bug_pull.mp3');
 
+const CARROT_SIZE = 100;
+const GAME_DURATION = 5;
+
+let started = false;
+
 // Start Game
 function onStart() {
+  started = true;
   // song play
   audioBgm.currentTime = 0;
   audioBgm.play();
@@ -28,37 +34,41 @@ function onStart() {
   createElement();
 
   //Timer start
-  startTimer();
+  startTimer(GAME_DURATION);
 }
 
 // Start button
 startBtn.addEventListener('click', () => {
-  popupBoxLose.classList.add('hidden');
-  popupBoxWin.classList.add('hidden');
-  popupBoxReply.classList.add('hidden');
   startBtn.classList.add('hidden');
   onStart();
 });
 
+firstStartBtn.addEventListener('click', () => {
+  showGameStatus();
+  onStart();
+  firstStartBox.classList.add('none');
+});
+
+function showGameStatus() {
+  settingBox.classList.remove('hidden');
+}
+
 // Timer
 let timeCountdown;
-function startTimer() {
-  let sec = 4;
+function startTimer(GAME_DURATION) {
+  let remainingSec = 0;
   timeCountdown = setInterval(() => {
-    timer.innerHTML = `00 : ${sec}`;
-    sec--;
+    timer.innerHTML = `00:0${GAME_DURATION - remainingSec}`;
+    remainingSec++;
+    console.log(remainingSec);
 
-    stopBtn.addEventListener('click', () => {
+    startBtn.addEventListener('click', () => {
       startBtn.classList.remove('hidden');
-      let pauseTime = Number(sec);
-      timer.innerHTML = ` 00 : ${pauseTime}`;
       clearInterval(timeCountdown);
-
       gameReply();
     });
 
-    if (sec === -1) {
-      sec = 0;
+    if (remainingSec > GAME_DURATION) {
       timer.innerHTML = `Time over!`;
       gameFail();
     }
@@ -84,16 +94,26 @@ function createElement() {
 }
 
 // Make random coordinates with min, max
-function randint(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+function randomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function elementPosition(element) {
+  const carrotBoxRectX = carrotBox.getBoundingClientRect().width;
+  const carrotBoxRectY = carrotBox.getBoundingClientRect().height;
+
+  element.style.position = 'absolute';
+  const x = randomNumber(0, carrotBoxRectX - CARROT_SIZE);
+  const y = randomNumber(0, carrotBoxRectY - CARROT_SIZE);
+
+  element.style.left = `${x}px`;
+  element.style.top = `${y}px`;
+
+  carrotBox.appendChild(element);
 }
 
 function createLocaCarrot(element) {
-  element.style.position = 'absolute';
-  element.style.left = randint(17, 1981) + 'px';
-  element.style.top = randint(641, 800) + 'px';
-
-  carrotBox.appendChild(element);
+  elementPosition(element);
 
   element.addEventListener('click', (e) => {
     audioCarrot.play();
@@ -109,11 +129,7 @@ function createLocaCarrot(element) {
 }
 
 function createLocaBug(element) {
-  element.style.position = 'absolute';
-  element.style.left = randint(17, 1513) + 'px';
-  element.style.top = randint(641, 1037) + 'px';
-
-  carrotBox.appendChild(element);
+  elementPosition(element);
 
   element.addEventListener('click', () => {
     audioBug.play();
@@ -128,7 +144,7 @@ function gameFail() {
 
   clearInterval(timeCountdown);
   startBtn.classList.toggle('hidden');
-  popupBoxLose.classList.toggle('hidden');
+  showPopUp('lose');
 
   while (carrotBox.firstChild) {
     carrotBox.firstChild.remove();
@@ -142,7 +158,7 @@ function gameWin() {
 
   clearInterval(timeCountdown);
   startBtn.classList.toggle('hidden');
-  popupBoxWin.classList.toggle('hidden');
+  showPopUp('win');
 
   while (carrotBox.firstChild) {
     carrotBox.firstChild.remove();
@@ -154,11 +170,24 @@ function gameReply() {
   audioBgm.pause();
   audioAlert.play();
 
-  popupBoxReply.classList.remove('hidden');
-  startBtn.classList.remove('hidden');
+  showPopUp('stop');
 
   while (carrotBox.firstChild) {
     carrotBox.firstChild.remove();
+  }
+}
+
+function showPopUp(gameOutcome) {
+  popupBox.classList.remove('hidden');
+  switch (gameOutcome) {
+    case 'win':
+      popUpMessage.innerHTML = `YOU ARE THE BEST FRIEND❗️`;
+      break;
+    case 'lose':
+      popUpMessage.innerHTML = `I'M HUNGRY..`;
+      break;
+    case 'stop':
+      popUpMessage.innerHTML = 'REPLAY❓';
   }
 }
 
@@ -166,9 +195,7 @@ function gameReply() {
 document.body.addEventListener('click', (e) => {
   if (e.target.className == 'fas fa-undo') {
     startBtn.classList.toggle('hidden');
-    popupBoxLose.classList.add('hidden');
-    popupBoxWin.classList.add('hidden');
-    popupBoxReply.classList.add('hidden');
+    popupBox.classList.add('hidden');
     onStart();
   }
 });

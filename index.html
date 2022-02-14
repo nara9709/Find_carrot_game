@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script
       src="https://kit.fontawesome.com/4eb0532937.js"
       crossorigin="anonymous"
@@ -13,34 +16,35 @@
     <title>Find carrot game!</title>
   </head>
   <body>
-    <div class="setting__box">
-      <button class="btn btn__start"><i class="fas fa-play-circle"></i></button>
-      <button class="btn btn__stop">
-        <i class="fas fa-stop-circle"></i>
-      </button>
-      <span class="timer">00:05</span>
-      <span class="count">8</span>
-    </div>
-    <div class="carrot__box"></div>
-    <div class="popup popup__box__lose hidden">
+    <section class="game">
+      <header class="setting__box hidden">
+        <button class="btn btn__start">
+          <i class="fas fa-play-circle"></i>
+        </button>
+        <!-- <button class="btn btn__stop">
+          <i class="fas fa-stop-circle"></i> -->
+        </button>
+        <span class="timer">00:05</span>
+        <span class="count">8</span>
+      </header>
+      <div class="carrot__box"></div>
+    </section>
+    <section class="pop-up hidden">
       <button class="btn btn__reset">
         <i class="fas fa-undo"></i>
       </button>
-      <span class="popup__message">YOU LOST</span>
-    </div>
+      <span class="pop-up__message">Hello</span>
+    </section>
+    <section class="first_start_box">
+      <span class="first_start_box__message">Hi, I'm Bunny.<br>
+         I need to harvest<br> my carrots. <br><br>
+      But I'm too sleepy,<br> 
+       Please can you do that<br> instead of me?  </span>
+      <button class="btn btn__first_start">
+        <i class="fas fa-play-circle"><span class="message_first_start">Let's help Bunney!</span></i>
+      </button>
+    </section>
 
-    <div class="popup popup__box__win hidden">
-      <button class="btn btn__reset">
-        <i class="fas fa-undo"></i>
-      </button>
-      <span class="popup__message">YOU WON 🎉</span>
-    </div>
-
-    <div class="popup popup__box__reply hidden">
-      <button class="btn btn__reset">
-        <i class="fas fa-undo"></i>
-      </button>
-      <span class="popup__message">REPLAY❓</span>
-    </div>
+ 
   </body>
 </html>
