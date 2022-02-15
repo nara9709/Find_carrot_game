@@ -6,28 +6,29 @@ const audioCarrot = new Audio('./audio/carrot_pull.mp3');
 const audioBug = new Audio('./audio/bug_pull.mp3');
 
 export function playCarrot() {
-  playSound(audioCarrot);
+  playSound(audioCarrot, 0.7);
 }
 export function playBug() {
-  playSound(audioBug);
+  playSound(audioBug, 0.7);
 }
 export function playBgm() {
-  playSound(audioBgm);
+  playSound(audioBgm, 1);
 }
 export function playWin() {
-  playSound(audioWin);
+  playSound(audioWin, 0.7);
 }
 export function playAlert() {
-  playSound(audioAlert);
+  playSound(audioAlert, 0.7);
 }
 
 export function stopBgm() {
   stopSound(audioBgm);
 }
 
-function playSound(sound) {
+function playSound(sound, volume) {
   sound.currentTime = 0;
   sound.play();
+  sound.volume = volume;
 }
 
 function stopSound(sound) {

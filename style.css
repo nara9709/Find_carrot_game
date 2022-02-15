@@ -3,7 +3,11 @@
 }
 
 :root {
-  --outline: solid 4px black;
+  /* Animation */
+  --animation-duration: all 100ms ease-in;
+
+  /* Line */
+  --outline: solid 4px rgb(240, 173, 96);
 }
 
 body {
@@ -11,19 +15,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: black;
+  background: url('./img/bugs_bunny_background.jpg');
 }
 
 .btn {
   cursor: pointer;
   padding: 0;
   text-align: center;
-  font-size: 50px;
+  font-size: 40px;
   width: 75px;
   height: 75px;
   margin-top: 15px;
   border: none;
-  background-color: beige;
+  color: rgba(243, 156, 18, 0.7);
+  background-color: white;
   border-radius: 10px;
   outline: var(--outline);
   transition: all 150ms ease-in;
@@ -41,6 +46,7 @@ body {
 }
 
 .first_start_box {
+  position: absolute;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -51,7 +57,7 @@ body {
   border-radius: 30px;
   background-color: rgba(243, 156, 18, 0.7);
 
-  transform: translateY(-150%);
+  transform: translateY(70%);
 }
 
 .first_start_box__message {
@@ -73,6 +79,24 @@ body {
   font-family: 'Ubuntu Mono', monospace;
 }
 
+.img_start_bunny {
+  position: absolute;
+  width: 400px;
+  transform: translateY(-90%);
+}
+
+.img_lose_bunny {
+  position: absolute;
+  width: 200px;
+  transform: translateY(-107%);
+}
+
+.img_win_bunny {
+  position: absolute;
+  width: 200px;
+  transform: translateY(-74%);
+}
+
 .carrot__box {
   position: relative;
   margin: auto;
@@ -81,12 +105,19 @@ body {
 }
 
 .carrot__img {
-  cursor: pointer;
   width: 90px;
+  transition: var(--animation-duration);
 }
 
 .bug__img {
-  width: 90px;
+  width: 80px;
+  transition: var(--animation-duration);
+}
+
+.carrot__img:hover,
+.bug__img:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .setting__box {
@@ -111,11 +142,11 @@ body {
 }
 
 .count {
-  background-color: palegreen;
-  color: white;
+  background-color: white;
+  color: rgba(243, 156, 18, 0.7);
   font-size: 60px;
   font-weight: bold;
-  padding: 5px 25px;
+  padding: 5px 21px;
   border-radius: 50%;
   outline: var(--outline);
 }
@@ -135,8 +166,9 @@ body {
 }
 
 .pop-up__message {
-  margin-top: 10px;
-  font-size: 35px;
+  text-align: center;
+  margin: 8px 0px 5px 5px;
+  font-size: 38px;
   color: white;
 }
 

@@ -7,10 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script
-      src="https://kit.fontawesome.com/4eb0532937.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/4eb0532937.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./style.css" />
     <script type="module" src="./src/main.js" ></script>
     <title>Help Bunney!</title>
@@ -19,7 +16,7 @@
     <section class="game">
       <header class="setting__box hidden">
         <button class="btn btn__start">
-          <i class="fas fa-play-circle"></i>
+          <i class="fas fa-stop"></i>
         </button>
         <!-- <button class="btn btn__stop">
           <i class="fas fa-stop-circle"></i> -->
@@ -29,17 +26,18 @@
       </header>
       <div class="carrot__box"></div>
     </section>
-    <section class="pop-up hidden">
+    <section class="pop-up none">
       <button class="btn btn__reset">
         <i class="fas fa-undo"></i>
       </button>
       <span class="pop-up__message">Hello</span>
     </section>
     <section class="first_start_box">
+      <img class="img_start_bunny" src="./img/start_bunny.png" alt="bugs Bunny">
       <span class="first_start_box__message">Hi, I'm Bunny.<br>
          I need to harvest<br> my carrots. <br><br>
       But I'm too sleepy,<br> 
-       Please can you do that<br> instead of me?  </span>
+       Please can you do that<br> instead of me, buddy?  </span>
       <button class="btn btn__first_start">
         <i class="fas fa-play-circle"><span class="message_first_start">Let's help Bunney!</span></i>
       </button>

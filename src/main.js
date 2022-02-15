@@ -9,37 +9,42 @@ const carrotBox = document.querySelector('.carrot__box');
 const timer = document.querySelector('.timer');
 const startBtn = document.querySelector('.btn__start');
 const firstStartBtn = document.querySelector('.btn__first_start');
-const resetBtn = document.querySelector('.btn__reset');
 const carrotCount = document.querySelector('.count');
-
 const CARROT_SIZE = 100;
 const GAME_DURATION = 5;
 
 let started = false;
 
-// Start Game
-function onStart() {
-  started = true;
-  // song play
-  sound.playBgm();
-  carrotCount.innerHTML = '8';
-
-  // Set carrots and bugs on random loncation
-  createElement();
-
-  //Timer start
-  startTimer(GAME_DURATION);
-}
-
 // Start button
 startBtn.addEventListener('click', () => {
-  startBtn.classList.add('hidden');
-  onStart();
+  started = !started;
+
+  if (started === true) {
+    onStart(started);
+  } else if (started === false) {
+    gameReply();
+  }
 });
 
+// Start Game
+function onStart(started) {
+  if (started === true) {
+    // song play
+    sound.playBgm();
+    carrotCount.innerHTML = '8';
+
+    // Set carrots and bugs on random loncation
+    createElement();
+
+    //Timer start
+    startTimer(GAME_DURATION);
+  }
+}
+
 firstStartBtn.addEventListener('click', () => {
+  started = true;
   showGameStatus();
-  onStart();
+  onStart(started);
   firstStartBox.classList.add('none');
 });
 
@@ -54,13 +59,6 @@ function startTimer(GAME_DURATION) {
   timeCountdown = setInterval(() => {
     timer.innerHTML = `00:0${GAME_DURATION - remainingSec}`;
     remainingSec++;
-    console.log(remainingSec);
-
-    startBtn.addEventListener('click', () => {
-      startBtn.classList.remove('hidden');
-      clearInterval(timeCountdown);
-      gameReply();
-    });
 
     if (remainingSec > GAME_DURATION) {
       timer.innerHTML = `Time over!`;
@@ -161,9 +159,11 @@ function gameWin() {
 
 // When click stop button
 function gameReply() {
-  sound.stopBgm;
-  sound.playAlert;
+  sound.playAlert();
+  sound.stopBgm();
 
+  clearInterval(timeCountdown);
+  startBtn.classList.toggle('hidden');
   showPopUp('stop');
 
   while (carrotBox.firstChild) {
@@ -172,7 +172,8 @@ function gameReply() {
 }
 
 function showPopUp(gameOutcome) {
-  popupBox.classList.remove('hidden');
+  popupBox.classList.toggle('none');
+  showImage(gameOutcome);
   switch (gameOutcome) {
     case 'win':
       popUpMessage.innerHTML = `YOU ARE THE BEST FRIEND❗️`;
@@ -185,11 +186,31 @@ function showPopUp(gameOutcome) {
   }
 }
 
+function showImage(gameOutcome) {
+  const createImg = document.createElement('img');
+
+  if (gameOutcome === 'win') {
+    createImg.setAttribute('src', './img/win_bunny.png');
+    createImg.setAttribute('class', 'bunny_img img_win_bunny');
+  } else if (gameOutcome === 'lose') {
+    createImg.setAttribute('src', './img/lose_bunny.png');
+    createImg.setAttribute('class', 'bunny_img img_lose_bunny');
+  }
+
+  popupBox.appendChild(createImg);
+}
+
 // Reset button
 document.body.addEventListener('click', (e) => {
   if (e.target.className == 'fas fa-undo') {
+    if (popupBox.lastChild.nodeName === 'IMG') {
+      popupBox.removeChild(popupBox.lastChild);
+    }
     startBtn.classList.toggle('hidden');
-    popupBox.classList.add('hidden');
-    onStart();
+    popupBox.classList.toggle('none');
+
+    started = true;
+
+    onStart(started);
   }
 });
