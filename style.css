@@ -8,6 +8,9 @@
 
   /* Line */
   --outline: solid 4px rgb(240, 173, 96);
+
+  /* color */
+  --main-orange: #f39c12;
 }
 
 body {
@@ -27,7 +30,7 @@ body {
   height: 75px;
   margin-top: 15px;
   border: none;
-  color: rgba(243, 156, 18, 0.7);
+  color: var(--main-orange);
   background-color: white;
   border-radius: 10px;
   outline: var(--outline);
@@ -55,7 +58,7 @@ body {
   width: 600px;
   height: 500px;
   border-radius: 30px;
-  background-color: rgba(243, 156, 18, 0.7);
+  background-color: rgba(243, 156, 18, 0.9);
 
   transform: translateY(70%);
 }
@@ -138,12 +141,13 @@ body {
   outline: var(--outline);
   border-radius: 10px;
   font-size: 50px;
+  color: var(--main-orange);
   background-color: white;
 }
 
 .count {
   background-color: white;
-  color: rgba(243, 156, 18, 0.7);
+  color: var(--main-orange);
   font-size: 60px;
   font-weight: bold;
   padding: 5px 21px;
